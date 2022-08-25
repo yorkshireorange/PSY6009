@@ -74,6 +74,8 @@ Programme: MSc Psychological Research Methods with Data Science
 
 -   here 1.0.1
 
+-   jtools 2.2.0
+
 -   patchwork 1.1.1
 
 -   tidyr 1.2.0
