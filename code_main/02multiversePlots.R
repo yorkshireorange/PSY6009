@@ -79,12 +79,11 @@ ggsave(here("plot_save", "model_perf_plot.pdf"), scale = 2, width = 1920,
 # Subsetting the covariates list to remove categorical predictors 
 # (club, refCountry)
 model_perf_noncat_subset <- subset(covariates_list, (is.na(covariates_list[,c(6)])))
-model_perf_noncat_subset <- subset(avrate_noncat_subset, 
+model_perf_noncat_subset <- subset(model_perf_noncat_subset, 
                                    (is.na(model_perf_noncat_subset[,c(9)])))
 
 model_perf_noncat_data <- subset(outtable, 
                                  rownumber %in% model_perf_noncat_subset$rownumber)
-rm(avrate_noncat_subset)
 
 # Sort by R2m effect size
 model_perf_noncat_data <- model_perf_noncat_data[order(model_perf_noncat_data$R2m),]
