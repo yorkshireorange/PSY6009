@@ -1,14 +1,14 @@
 # PROJECT CODEBOOK
 
-## Project description
+## Data description - raw data
 
 **Data source:** [OSF](https://osf.io/fv8c3)
 
 **Original codebook:** [OSF](https://osf.io/9yh4x)
 
-**Description:** From a company for sports statistics, we obtained data and profile photos from all soccer players (N = 2053) playing in the first male divisions of England, Germany, France and Spain in the 2012-2013 season and all referees (N = 3147) that these players played under in their professional career. We created a dataset of player'96referee dyads including the number of matches players and referees encountered each other and our dependent variable, the number of red cards given to a player by a particular referee throughout all matches the two encountered each other. Player photos were available from the source for 1586 out of 2053 players. Players' skin tone was coded by two independent raters blind to the research question who, based on their profile photo, categorized players on a 5-point scale ranging from very light skin to very dark skin with neither dark nor light skin as the centre value. Additionally, implicit bias scores for each referee country were calculated using a race implicit association test (IAT), with higher values corresponding to faster white \| good, black \| bad associations. Explicit bias scores for each referee country were calculated using a racial thermometer task, with higher values corresponding to greater feelings of warmth toward whites versus blacks. Both these measures were created by aggregating data from many online users in referee countries taking these tests on [Project Implicit](http://projectimplicit.net/index.html).
+**Description:** From a company for sports statistics, we obtained data and profile photos from all soccer players (N = 2,053) playing in the first male divisions of England, Germany, France and Spain in the 2012-2013 season and all referees (N = 3,147) that these players played under in their professional career. We created a dataset of player-referee dyads including the number of matches players and referees encountered each other and our dependent variable, the number of red cards given to a player by a particular referee throughout all matches the two encountered each other. Player photos were available from the source for 1586 out of 2053 players. Players' skin tone was coded by two independent raters blind to the research question who, based on their profile photo, categorized players on a 5-point scale ranging from very light skin to very dark skin with neither dark nor light skin as the centre value. Additionally, implicit bias scores for each referee country were calculated using a race implicit association test (IAT), with higher values corresponding to faster white \| good, black \| bad associations. Explicit bias scores for each referee country were calculated using a racial thermometer task, with higher values corresponding to greater feelings of warmth toward whites versus blacks. Both these measures were created by aggregating data from many on-line users in referee countries taking these tests on [Project Implicit](http://projectimplicit.net/index.html). *(from project authors)*
 
-In all, the dataset has a total of 146028 dyads of players and referees. A detailed description of all variables in the dataset can be seen in the list below.
+In all, the dataset has a total of 146,028 dyads of players and referees. A detailed description of all variables in the dataset can be seen below.
 
 ### **Original variables**
 
@@ -54,23 +54,34 @@ In all, the dataset has a total of 146028 dyads of players and referees. A detai
 
 -   seIAT - standard error for mean estimate of race IAT
 
--   \
-    meanExp - mean explicit bias score (using a racial thermometer task) for referee country, higher values correspond to greater feelings of warmth toward whites versus blacks
+-   meanExp - mean explicit bias score (using a racial thermometer task) for referee country, higher values correspond to greater feelings of warmth toward whites versus blacks
 
 -   nExp - sample size for explicit bias in that particular country
 
 -   seExp - standard error for mean estimate of explicit bias measure
 
-## **Modifications**
-
--   Dyads with any unavailable information were removed, leaving 115457 dyads to be analysed.
-
 ### **Modified variables**
 
 -   avrate - the average of skin tone rating by rater 1 and 2
 
--   age - players' age as of the date of data analysis
+-   age - players' age calculated using an arbitrary cut-off date during the 2012-2013 season (as of 01/01/2013)
 
 -   position - collapsed player positions (to reduce the number of dummy-coded predictors; levels are goalkepper, back, middle, front) based on the assumption that players will normally be assigned similar positions across matches
 
 -   redcard - values \> 1 (N = 23) were collapsed with values = 1 to create a dichotomous dependent variable ("Red card assigned / not assigned".)
+
+## Data description - decontamination data set
+
+**Original code:** [OSF](https://osf.io/w7tds)
+
+**Original codebook:** [OSF](https://osf.io/x9zuv)
+
+**Code modification used:** [GitHub](https://github.com/yorkshireorange/PSY6009/tree/main/code_supl/refDecont.py)
+
+**Data set produced:** [GitHub](https://github.com/yorkshireorange/PSY6009/tree/main/data_supl/refDecontaminate.csv)
+
+**Description:** During data screening, Team 23 ([Stafford et al., 2014](https://osf.io/u5wpe)) found a major source of data impurity; some of the referees were imported into the 2012-2013 season data set from players' match history without having taken part in the aforementioned season. Their original code was revised and recycled in this project's analysis to produce identifies of referees 'contaminating' the data set. Stafford et al. (2014) disaggregated the dyads into individual matches, which was inconvenient for us due to computational power limitations and yellow card reassignment, therefore the identifiers were used to remove referees from the aggregated data set, reducing the number of dyads to 133, 501.
+
+### **Variables**
+
+-   refNum - a unique referee identifier that was used to remove referees who cannot have overseen any of the matches in the 2012-2013 season analysed.
