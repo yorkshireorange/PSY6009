@@ -10,7 +10,6 @@
 # ggplot2 3.3.6
 # here 1.0.1
 # jtools 2.2.0
-# patchwork 1.1.1
 # tidyr 1.2.0
 # tidyverse 1.3.1
 # viridis 0.6.2
@@ -219,7 +218,7 @@ avrate_orplot <- ggplot(data = avrate_ordata,
                       values = c("p >= .05"="red", 
                                  "p < .05" = "blue")) +
   labs(x = 'Specification number',
-       y = 'Odds ratio: average skin tone*') +
+       y = 'Odds ratio: average skin tone') +
 # The odds of dark-skinned players receiving a red card compared to 
 # light-skinned players. Lines represent 95% confidence intervals
   theme_bw()
@@ -233,15 +232,11 @@ ggsave(here("plot_save", "avrate_orplot.pdf"), scale = 2, width = 1920,
 ################################## Plot 3B
 ### Avrate model odds ratios and significance (non-categorical predictors)
 
-# Subset data frame - remove player position
-ordata_cont_subset <- subset(covariates_list, (is.na(covariates_list[,c(2)])))
 # Remove player club
-ordata_cont_subset <- subset(ordata_cont_subset, (is.na(ordata_cont_subset[,c(6)])))
-# Remove mean IAT
-ordata_cont_subset <- subset(ordata_cont_subset, (is.na(ordata_cont_subset[,c(8)])))
+ordata_cont_subset <- subset(covariates_list, (is.na(covariates_list[,c(6)])))
 # Remove referee country
 ordata_cont_subset <- subset(ordata_cont_subset, (is.na(ordata_cont_subset[,c(9)])))
-# Include non-NA avrate models 
+# Include all specifications with avrate 
 ordata_cont_subset <- subset(ordata_cont_subset,(!is.na(ordata_cont_subset[,c(1)])))
 # Match output with the new data frame
 avrate_ordata_cont <- subset(outtable, rownumber %in% ordata_cont_subset$rownumber)
@@ -266,7 +261,7 @@ avrate_orplot_cont <- ggplot(data = avrate_ordata_cont,
                       values = c("p >= .05"="red", 
                                  "p < .05" = "blue")) +
   labs(x = 'Specification number',
-       y = 'Odds ratio: average skin tone*') +
+       y = 'Odds ratio: average skin tone') +
   # The odds of dark-skinned players receiving a red card compared to 
   # light-skinned players. Lines represent 95% confidence intervals
   theme_bw()
