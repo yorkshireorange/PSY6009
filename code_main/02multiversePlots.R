@@ -335,10 +335,10 @@ colnames(avg_perf_data)[c(1,2,3,4,5,6,7,8,9,10)] <- c('Skin_Tone','Position',
                                                       'Ref_Country','Victories')
 
 # Adding 'nice names'
-cov_labels <- c("Players' age","Players' club", "Players' height",
-                "Referees' mean IAT scores","Players' position",
-                "Referees' country", "Players' skin tone","Players' victories",
-                "Players' weight", "Yellow Cards Received")
+cov_labels <- c("Age (P)","Club (P)", "Height (P)",
+                "IAT Score (R)","Position (P)",
+                "Country (P)", "Skin tone (P)","Victories (P)",
+                "Weight (P)", "Yellow Cards (P)")
 
 # Transforming data to pass through ggplot
 avg_perf_data <- avg_perf_data %>%
@@ -353,9 +353,10 @@ avg_perf_plot <- ggplot(data=avg_perf_data, mapping = aes(x = name, y = value, f
               bw = 0.0075,
               show.legend = FALSE) +
   scale_x_discrete(labels = cov_labels) + 
-  labs(y = 'Average overall Marginal R2',
-       x = 'Covariate') +
-  theme_bw()
+  labs(y = 'Clustered Marginal R2',
+       x = 'Covariates') +
+  theme_apa() +
+  theme(axis.text.x = element_text(angle = 90))
 
 avg_perf_plot
 
@@ -373,9 +374,10 @@ avg_perf_plot2 <- ggplot(data=avg_perf_data,
                binwidth = 1/100,
                show.legend = FALSE) +
   scale_x_discrete(labels = cov_labels) + 
-  labs(y = 'Average overall Marginal R2',
+  labs(y = 'Clustered Marginal R2',
        x = 'Covariate') + 
-  theme_bw()
+  theme_apa() +
+  theme(axis.text.x = element_text(angle = 90))
 
 avg_perf_plot2
 
@@ -428,10 +430,10 @@ colnames(avg_perf_data_noncat)[c(1,2,3,4,5,6,7,8)] <- c('Skin_Tone','Position',
                                                         'Victories')
 
 # Adding 'nice names'
-cov_labels_noncat <- c("Players' age", "Players' height",
-                       "Referees' mean IAT scores","Players' position",
-                       "Players' skin tone","Players' victories",
-                       "Players' weight", "Yellow Cards Received")
+cov_labels_noncat <- c("Age (P)", "Height (P)",
+                "IAT Score (R)","Position (P)",
+                "Skin tone (P)","Victories (P)",
+                "Weight (P)", "Yellow Cards (P)")
 
 # Transforming data to pass through ggplot
 avg_perf_data_noncat <- avg_perf_data_noncat %>%
@@ -448,17 +450,61 @@ avg_perf_plot_noncat <- ggplot(data=avg_perf_data_noncat, mapping = aes(x = name
   scale_x_discrete(labels = cov_labels_noncat) +
   geom_boxplot(width = 0.2, position = position_dodge(0.75)) +
   theme(axis.text.x = element_text(angle = 90)) +
-  labs(y = 'Average overall Marginal R2',
-       x = 'Covariate') + 
-  theme_apa()
+  labs(y = 'Clustered Marginal R2',
+       x = 'Covariate') +
+  theme_apa() + 
+  theme(axis.text.x = element_text(angle = 90))
+
 
 avg_perf_plot_noncat
 
-# Save plot
+# Save the plot
 ggsave(here("plot_save", "avg_perf_plot_noncat.pdf"), scale = 2, width = 1920,
        height = 1080, units ="px", dpi = "retina", bg = NULL)
 
 ################################## End of Plot 4A (v1 & v2) and 4B
+
+
+################################## Plot 5
+### Density curve of avrate ORs
+## including and excluding club and refCountry
+
+# Initiate the plot - covs included
+avrate_or_hist <- ggplot(avrate_ordata, aes(x=Avrate_OR))+
+  geom_density(color="darkblue") + 
+  geom_vline(aes(xintercept=median(Avrate_OR)),
+             color="red", linetype="dashed", size=0.5) + 
+  geom_vline(aes(xintercept=min(Avrate_OR)),
+             color="black", linetype="solid", size=0.5) + 
+  geom_vline(aes(xintercept=max(Avrate_OR)),
+             color="black", linetype="solid", size=0.5) + 
+  labs(x = 'OR: Averaged skin tone ratings', y = 'Density') + 
+  theme_apa()
+
+avrate_or_hist
+
+# Save the plot
+ggsave(here("plot_save", "avrate_or_hist.pdf"), scale = 2, width = 1920,
+       height = 1080, units ="px", dpi = "retina", bg = NULL)
+
+
+# Initiate the plot - covs excluded
+avrate_or_hist_cont <- ggplot(avrate_ordata_cont, aes(x=Avrate_OR))+
+  geom_density(color="darkblue") + 
+  geom_vline(aes(xintercept=median(Avrate_OR)),
+             color="red", linetype="dashed", size=0.5) + 
+  geom_vline(aes(xintercept=min(Avrate_OR)),
+             color="black", linetype="solid", size=0.5) + 
+  geom_vline(aes(xintercept=max(Avrate_OR)),
+             color="black", linetype="solid", size=0.5) + 
+  labs(x = 'OR: Averaged skin tone ratings', y = 'Density') + 
+  theme_apa()
+
+avrate_or_hist_cont
+
+# Save the plot
+ggsave(here("plot_save", "avrate_or_hist_cont.pdf"), scale = 2, width = 1920,
+       height = 1080, units ="px", dpi = "retina", bg = NULL)
 
 # The end of visualisation
 
